@@ -4,7 +4,7 @@ working_directory "#{app_path}/current"
 pid               "#{app_path}/shared/tmp/pids/unicorn.pid"
 
 # listen
-listen "/tmp/unicorn.chef_capistrano.sock", :backlog =/Users/leonelgalan/.ssh/known_hosts:4 64
+listen "/tmp/unicorn.chef_capistrano.sock", backlog: 64
 
 # logging
 stderr_path "log/unicorn.stderr.log"
@@ -19,7 +19,12 @@ before_exec do |server|
 end
 
 # preload
-# preload_app true
+preload_app true
+
+before_fork do |server, worker|
+  f = File.open("#{server.config[:pid]}.lock", 'w')
+  exit unless f.flock(File::LOCK_SH)
+end
 
 # before_fork do |server, worker|
 #   # the following is highly recomended for Rails + "preload_app true"
@@ -40,13 +45,8 @@ end
 #   end
 # end
 
-before_fork do |server, worker|
-  f = File.open("#{server.config[:pid]}.lock", 'w')
-  exit unless f.flock(File::LOCK_SH)
+after_fork do |server, worker|
+  if defined?(ActiveRecord::Base)
+    ActiveRecord::Base.establish_connection
+  end
 end
-
-# after_fork do |server, worker|
-#   if defined?(ActiveRecord::Base)
-#     ActiveRecord::Base.establish_connection
-#   end
-# end
