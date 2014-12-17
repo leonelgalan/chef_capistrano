@@ -40,3 +40,6 @@ bower.json
 
 config/database*yml
 config/secrets*yml
+
+!config/database.example.yml
+!config/secrets.example.yml

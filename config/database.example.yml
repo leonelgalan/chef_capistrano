@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: chef_capistrano_development
+
+test:
+  <<: *default
+  database: chef_capistrano_test

@@ -6,3 +6,5 @@ set :ssh_options, {
   forward_agent: true,
   port: port
 }
+
+set :repo_url, '/vagrant'
