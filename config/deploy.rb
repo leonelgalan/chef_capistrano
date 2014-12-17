@@ -3,7 +3,7 @@ lock '3.3.5'
 
 set :user, 'deploy'
 set :application, 'chef_capistrano'
-set :repo_url, 'git@github.com:leonelgalan/chef_capistrano.git'
+# set :repo_url, 'git@github.com:leonelgalan/chef_capistrano.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -18,7 +18,7 @@ set :deploy_to, "/home/#{ fetch :user }/www/#{ fetch :application }"
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-set :log_level, :info
+# set :log_level, :info
 
 # Default value for :pty is false
 # set :pty, true
